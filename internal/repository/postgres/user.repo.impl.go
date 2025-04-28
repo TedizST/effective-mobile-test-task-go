@@ -103,7 +103,7 @@ func (r *userRepo) Find(ctx context.Context, uqo *model.UserQueryOptions) ([]mod
 		return nil, 0, apperror.NewAppError("userRepo.Find", "rows interation error", err)
 	}
 
-	log.Debug().Int("page_rows", totalCount).Msg("users found into database")
+	log.Debug().Int("total_rows", totalCount).Int("page_rows", len(users)).Msg("users found into database")
 
 	return users, totalCount, nil
 }
