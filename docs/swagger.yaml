@@ -1,0 +1,307 @@
+basePath: /
+definitions:
+  dto.EmptyResponseDTO:
+    properties:
+      success:
+        default: true
+        description: Статус операции
+        type: boolean
+    type: object
+  dto.ErrorPayload:
+    properties:
+      message:
+        description: Текст ошибки
+        type: string
+    type: object
+  dto.ErrorResponseDTO:
+    properties:
+      payload:
+        $ref: '#/definitions/dto.ErrorPayload'
+      success:
+        default: false
+        type: boolean
+    type: object
+  dto.ListOfUsersPayload:
+    properties:
+      total:
+        description: Общее количество записей с переданными фильтрами
+        example: 0
+        type: integer
+      users:
+        description: Список пользователей на указанной странице
+        items:
+          $ref: '#/definitions/dto.UserPayload'
+        type: array
+    type: object
+  dto.ResponseDTO:
+    properties:
+      payload:
+        description: Полезная нагрузка
+      success:
+        default: true
+        description: Статус операции
+        type: boolean
+    type: object
+  dto.UserCreatePayload:
+    properties:
+      uuid:
+        description: ID пользователя
+        example: 8d571787-9981-4add-a713-2fde6236e84b
+        type: string
+    type: object
+  dto.UserPayload:
+    properties:
+      age:
+        description: Возврат пользователя
+        example: 22
+        type: integer
+      country_id:
+        description: Строковый ID страны пользователя
+        example: RU
+        type: string
+      created_at:
+        description: Строковое представление даты создания пользователя
+        example: 2006-01-02T15:04:05Z07:00
+        type: string
+      gender:
+        description: Пол пользователя
+        example: male
+        type: string
+      name:
+        description: Имя пользователя
+        example: Dmitriy
+        type: string
+      patronymic:
+        description: Отчество пользователя
+        example: Vasilevich
+        type: string
+      surname:
+        description: Фамилия пользователя
+        example: Ushakov
+        type: string
+      uuid:
+        description: ID пользователя
+        example: 8d571787-9981-4add-a713-2fde6236e84b
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Тестовое задание на GO для Effective Mobile.
+  title: Effective Mobile API
+  version: "1.0"
+paths:
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Получение списка пользователей с помощью передачи query параметров
+      parameters:
+      - description: Номер страницы
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Количество записей на 1 странице
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: Имя пользователя
+        in: query
+        name: name
+        type: string
+      - description: Фамилия пользователя
+        in: query
+        name: surname
+        type: string
+      - description: Отчество пользователя
+        in: query
+        name: patronymic
+        type: string
+      - description: Возраст пользователя
+        in: query
+        name: age
+        type: integer
+      - description: Пол пользователя
+        in: query
+        name: gender
+        type: string
+      - description: Код страны пользователя
+        in: query
+        name: country_id
+        type: string
+      - description: Поле для сортировки
+        in: query
+        name: order_by
+        type: string
+      - description: Направление сортировки ASC, DESC
+        in: query
+        name: order_dir
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.ResponseDTO'
+            - properties:
+                payload:
+                  $ref: '#/definitions/dto.ListOfUsersPayload'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponseDTO'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponseDTO'
+      summary: Поиск пользователей с использованием фильтров и пагинации
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Создание пользователя, данные будут обогащены с помощью публичных
+        API
+      parameters:
+      - description: Имя пользователя
+        in: body
+        name: name
+        required: true
+        schema:
+          type: string
+      - description: Фамилия пользователя
+        in: body
+        name: surname
+        required: true
+        schema:
+          type: string
+      - description: Отчество пользователя
+        in: query
+        name: patronymic
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.ResponseDTO'
+            - properties:
+                payload:
+                  $ref: '#/definitions/dto.UserCreatePayload'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponseDTO'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponseDTO'
+      summary: Создание пользователя
+      tags:
+      - users
+  /users/{uuid}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаление пользователя по переданному ID
+      parameters:
+      - description: ID пользователя
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.EmptyResponseDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponseDTO'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dto.ErrorResponseDTO'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponseDTO'
+      summary: Удаление пользователя
+      tags:
+      - users
+    patch:
+      consumes:
+      - application/json
+      description: Обновление данных пользователя (в теле запроса нет обязательных
+        полей, но в случае передачи пустого тела запроса будет возвращен ответ с кодом
+        400)
+      parameters:
+      - description: ID пользователя
+        in: path
+        name: uuid
+        required: true
+        type: string
+      - description: Имя пользователя
+        in: body
+        name: name
+        schema:
+          type: string
+      - description: Фамилия пользователя
+        in: body
+        name: surname
+        schema:
+          type: string
+      - description: Отчество пользователя
+        in: body
+        name: patronymic
+        schema:
+          type: string
+      - description: Возраст пользователя
+        in: body
+        name: age
+        schema:
+          type: integer
+      - description: Пол пользователя
+        in: body
+        name: gender
+        schema:
+          type: string
+      - description: Код страны пользователя
+        in: body
+        name: country_id
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.EmptyResponseDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponseDTO'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dto.ErrorResponseDTO'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponseDTO'
+      summary: Обновление данных пользователя
+      tags:
+      - users
+swagger: "2.0"
