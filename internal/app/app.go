@@ -185,6 +185,10 @@ func (b *AppBuilder) Run() {
 		b.logger.Error().Err(err).Msg("server shutdown failed")
 		return
 	}
+	if err := b.db.Close(); err != nil {
+		b.logger.Error().Err(err).Msg("db connection close failed")
+		return
+	}
 
 	b.logger.Info().Msg("server exited properly")
 }
