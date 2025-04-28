@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "e0f86509-5d50-4dcf-9bbc-ebf1cf085942",
+		"name": "Effective mobile test task GO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20819626"
+	},
+	"item": [
+		{
+			"name": "Получить список с пагинацией",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Auth-Email",
+						"value": "romob46@gmail.com",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Key",
+						"value": "38e693046c34327f2eb86d0a1b4be974cd7cb",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users?page=1&limit=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавить",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Auth-Email",
+						"value": "romob46@gmail.com",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Key",
+						"value": "38e693046c34327f2eb86d0a1b4be974cd7cb",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Dmitriy\",\r\n    \"surname\": \"Ushakov\",\r\n    \"patronymic\": \"Vasilevich\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Изменить",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "X-Auth-Email",
+						"value": "romob46@gmail.com",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Key",
+						"value": "38e693046c34327f2eb86d0a1b4be974cd7cb",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Dmitriy2\",\r\n    \"surname\": \"Ushakov2\",\r\n    \"patronymic\": \"Vasilevich2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users/:uuid",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						":uuid"
+					],
+					"variable": [
+						{
+							"key": "uuid",
+							"value": "092f8198-5eaa-4bcf-8d5a-03dd95fdc308"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удалить",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Auth-Email",
+						"value": "romob46@gmail.com",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Key",
+						"value": "38e693046c34327f2eb86d0a1b4be974cd7cb",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Dmitriy\",\r\n    \"surname\": \"Ushakov\",\r\n    \"patronymic\": \"Vasilevich\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users/:uuid",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						":uuid"
+					],
+					"variable": [
+						{
+							"key": "uuid",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
