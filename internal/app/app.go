@@ -49,7 +49,15 @@ func (b *AppBuilder) WithEnv() *AppBuilder {
 }
 
 func (b *AppBuilder) WithLogger() *AppBuilder {
-	b.logger = zerolog.New(os.Stdout).With().Timestamp().Logger()
+	var zl zerolog.Level
+
+	if os.Getenv("ENV") == "prod" {
+		zl = zerolog.InfoLevel
+	} else {
+		zl = zerolog.DebugLevel
+	}
+
+	b.logger = zerolog.New(os.Stdout).Level(zl).With().Timestamp().Logger()
 	return b
 }
 
